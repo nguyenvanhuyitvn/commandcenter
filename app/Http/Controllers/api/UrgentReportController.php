@@ -9,7 +9,7 @@ class UrgentReportController extends Controller
     public $successStatus = 200;
     public function create(){
             $problem_types = SeriousProblemType::all();
-            $data = UrgentReportsFormat($problem_types, 0, '--|');
+            $data = UrgentFormat($problem_types, 0, '--|');
             return response()->json(['data'=> $data], $this->successStatus);
     }
 }
