@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\api;
 use App\User;
 use Validator;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public $successStatus = 200;
-    /** 
-     * login api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /**
+     * login api
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request){
         if(Auth::attempt($request->only('email', 'password'))){
             $user = Auth::user();
@@ -24,11 +24,11 @@ class UserController extends Controller
             return response()->json(['error'=>'Unauthorised'], 401);
         }
     }
-    /** 
-     * Register api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
+    /**
+     * Register api
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
             'name'=>'required',
@@ -46,15 +46,19 @@ class UserController extends Controller
         $success['name'] = $user->name;
         return response()->json(['success'=> $success], $this->successStatus);
     }
-    /** 
-     * details api 
-     * 
-     * @return \Illuminate\Http\Response 
-     */ 
-    public function details() 
-    { 
-        $user = Auth::user(); 
-        return response()->json(['success' => $user], $this-> successStatus); 
-        
-    } 
+    /**
+     * details api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(){
+        $user = Auth::user();
+        return response()->json(['success' => $user], $this->successStatus);
+    }
+    public function details()
+    {
+        $user = Auth::user();
+        return response()->json(['success' => $user], $this->successStatus);
+
+    }
 }

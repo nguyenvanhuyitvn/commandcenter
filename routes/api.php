@@ -21,9 +21,14 @@ use Illuminate\Http\Request;
 Route::post('login', 'api\UserController@login')->name('login');
 Route::post('register', 'api\UserController@register')->name('register');
 Route::group(['middleware' => 'auth:api'], function() {
-    Route::post('details', 'api\UserController@details'); 
-    Route::get('bao-cao-khan-cap','api\UrgentReportController@index')->name('list_report');
-    Route::get('bao-cao-khan-cap','api\UrgentReportController@create')->name('create_report');   
-    Route::post('bao-cao-khan-cap','api\UrgentReportController@store')->name('store_report');   
+    // User
+    Route::resource('Users', 'api\UserController');
+    Route::post('details', 'api\UserController@details');
+    // Urgent Reports
+    Route::resource('UrgentReports', 'api\UrgentReportController');
+    // serious problem types
+    Route::resource('SeriousProblemTypes', 'api\SeriousProblemTypes');
+    // Hospital
+    Route::resource('Hospitals', 'api\HospitalsController');
 });
 
