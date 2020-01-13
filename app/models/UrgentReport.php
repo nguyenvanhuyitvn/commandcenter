@@ -3,7 +3,7 @@
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\models\ReportType;
 class UrgentReport extends Model
 {
     protected $table = "urgent_reports";
@@ -14,4 +14,10 @@ class UrgentReport extends Model
         'recorded_medical','notify_patient','witnesses1','witnesses2','time_problem','date_problem','problem_object','note','file',
         'name_reporter','email_reporter','phone_reporter',	'type_reporter'
     ];
+    
+    public function ReportType()
+    {
+        return $this->belongsTo('App\models\ReportType', 'report_types_id', 'id');
+    }
+    
 }

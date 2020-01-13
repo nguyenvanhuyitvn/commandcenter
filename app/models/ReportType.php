@@ -7,4 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class ReportType extends Model
 {
     protected $table = "report_types";
+    
+    public function UrgentReport()
+    {
+        return $this->hasMany('App\models\UrgentReport', 'report_types_id', 'id');
+    }
+    
 }
