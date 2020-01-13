@@ -46,7 +46,7 @@ class CreateUrgentReportsTable extends Migration
             $table->string('witnesses1');
             $table->string('witnesses2');
             $table->string('time_problem');
-            $table->date('date_problem');
+            $table->date('date_problem')->default('2020-01-13 16:28:47');
             $table->integer('problem_object');
             $table->text('note');
             $table->string('file');

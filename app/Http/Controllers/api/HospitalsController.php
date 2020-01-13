@@ -38,7 +38,7 @@ class HospitalsController extends Controller
         {
             foreach($hospitals as $k=> $hospitals){
                 if($hospitals['code'] === $request->code){
-                    return response(['is_exist'=> '1', 'message' => 'Bệnh viện đã tồn tại']);
+                    return response(['error' => 'Hospital is existed'], 401);
                 }
                 else{
                    if ($request->hasFile('file')) {
@@ -47,12 +47,12 @@ class HospitalsController extends Controller
                         $logoUrl = url('uploads'.'/'.$filename);
                         $request->merge(['image' => $filename]);
                         $hospital= Hospital::create($request->all());
-                        return response(['success'=>'Thêm bệnh viện thành công 1','request'=> $request->all()]);
+                        return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
                     }else{
                         $filename = 'no-image.png';
                         $request->merge(['image' =>  $filename]);
                         $hospital= Hospital::create($request->all());
-                        return response(['success'=>'Thêm bệnh viện thành công 2','request'=> $request->all()]);
+                        return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
 
                 }
@@ -65,11 +65,11 @@ class HospitalsController extends Controller
                         $logUrl = url('uploads'.'/'.$filename);
                         $request->merge(['image' => $filename]);
                         $hospital= Hospital::create($request->all());
-                        return response(['success'=>'Thêm bệnh viện thành công 3','request'=> $request->all()]);
+                        return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }else{
                         $request->merge(['image' => 'no-image.png']);
                         $hospital= Hospital::create($request->all());
-                        return response(['success'=>'Thêm bệnh viện thành công 4','request'=> $request->all()]);
+                        return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
         }
     //     if ($request->hasFile('file')) {
@@ -100,10 +100,21 @@ class HospitalsController extends Controller
             $path = $request->image->move("uploads",$logo);
             $logoUrl = url('uploads'.'/'.$logo);
             $request->merge(['logo' => $logo]);
-            $hospital = Hospital::create($request->all());
-            return response()->json(['success'=> "Created Successfull"], $this->successStatus);
+            $hospital = Hospital::update($request->all());
+            return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }else{
-            return response()->json(['error'=>'Hospital is not created.'],401);
+            $input= $request->only(['code','name', 'districts_id', 'provinces_id','wards_id','depts_id','address']);
+            $hospital = Hospital::update($input);
+            return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }
+    }
+    public function destroy($id){
+        $hospital = Hospital::destroy($id);
+        if($hospital){
+            return response()->json(['success'=> "Deleted Successfull"], $this->successStatus);
+        }else{
+            return response()->json(['error'=> "Cannot find hospital"], $this->successStatus);
+        }
+        
     }
 }

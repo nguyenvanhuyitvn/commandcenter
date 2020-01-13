@@ -52,6 +52,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        $user = User::all();
+        return response()->json(['success' => $user], $this->successStatus);
+    }
+    public function show($id){
         $user = Auth::user();
         return response()->json(['success' => $user], $this->successStatus);
     }
