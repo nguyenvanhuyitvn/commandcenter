@@ -26,8 +26,9 @@ class CreateUrgentReportsTable extends Migration
             $table->foreign('hospitals_id')->references('id')->on('hospitals')->onDelete('cascade');
             $table->integer('departments_id')->unsigned();
             $table->foreign('departments_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->integer('serious_problem_types_id')->unsigned();
-            $table->foreign('serious_problem_types_id')->references('id')->on('serious_problem_types')->onDelete('cascade');
+            $table->string('serious_problem_types_id');
+            // $table->integer('serious_problem_types_id')->unsigned();
+            // $table->foreign('serious_problem_types_id')->references('id')->on('serious_problem_types')->onDelete('cascade');
             $table->bigInteger('users_id')->unsigned();
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('received_id')->unsigned();
@@ -46,7 +47,7 @@ class CreateUrgentReportsTable extends Migration
             $table->string('witnesses1');
             $table->string('witnesses2');
             $table->string('time_problem');
-            $table->date('date_problem')->default('2020-01-13 16:28:47');
+            $table->date('date_problem');
             $table->integer('problem_object');
             $table->text('note');
             $table->string('file');

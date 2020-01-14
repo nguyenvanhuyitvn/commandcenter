@@ -50,6 +50,7 @@ class HospitalsController extends Controller
                         return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
                     }else{
                         $filename = 'no-image.png';
+                        $logoUrl = url('uploads'.'/'.$filename);
                         $request->merge(['image' =>  $filename]);
                         $hospital= Hospital::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
@@ -115,6 +116,6 @@ class HospitalsController extends Controller
         }else{
             return response()->json(['error'=> "Cannot find hospital"], $this->successStatus);
         }
-        
+
     }
 }
