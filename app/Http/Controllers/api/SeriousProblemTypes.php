@@ -13,6 +13,16 @@ class SeriousProblemTypes extends Controller
         $data = buildTree($problem_types, 0);
         return response()->json(['data'=> $data], $this->successStatus);
     }
+    public function create(){
+        $problem_types = SeriousProblemType::all();
+        $data = buildTree($problem_types, 0);
+        return response()->json(['data'=> $data], $this->successStatus);
+    }
+    public function store(Request $request){
+        $input = $request->all();
+        SeriousProblemType::create($input);
+        return response()->json(['success'=> "Created Successfull"], $this->successStatus);
+    }
     public function edit($id){
         $data = SeriousProblemType::find($id);
         return response()->json(['data'=> $data], $this->successStatus);
@@ -25,5 +35,14 @@ class SeriousProblemTypes extends Controller
         }else{
             return response()->json(['error'=> "Cannot find the serious problem type with id=$id"], 401);
         }
+    }
+    public function destroy($id){
+        $result = SeriousProblemType::destroy($id);
+        if($result){
+            return response()->json(['success'=> "Deleted Successfull"], $this->successStatus);
+        }else{
+            return response()->json(['error'=> "Cannot find hospital"], $this->successStatus);
+        }
+
     }
 }

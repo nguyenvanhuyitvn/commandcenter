@@ -14,7 +14,7 @@ class DeptsTableSeeder extends Seeder
         DB::table('depts')->delete();
         DB::table('depts')->insert(
             [
-                ['id'=>1, "name"=>"Sở y tế Hà Nội", "logo"=>"uploads\so-y-te-hn.png", "districts_id"=>"007", "provinces_id"=>"01", "wards_id"=>"00277","address"=>"Giải Phóng"]
+                ['id'=>1, "name"=>"Sở y tế Hà Nội", "logo"=>"public\uploads\so-y-te-hn.png", "districts_id"=>"007", "provinces_id"=>"01", "wards_id"=>"00277","address"=>"Giải Phóng"]
             ]
         );
     }

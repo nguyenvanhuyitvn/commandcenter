@@ -20,9 +20,9 @@ class HospitalsController extends Controller
     public function show($id){
         $hospital = Hospital::find($id);
         if($hospital){
-            return response()->json(['data'=> 'Data null'], 401);
-        }else{
             return response()->json(['data'=> $hospital], $this->successStatus);
+        }else{
+            return response()->json(['data'=> 'Data null'], 401);
         }
     }
     public function create(){
@@ -36,8 +36,8 @@ class HospitalsController extends Controller
         $hospitals = Hospital::all();
         if($hospitals->count()!=0)
         {
-            foreach($hospitals as $k=> $hospitals){
-                if($hospitals['code'] === $request->code){
+            foreach($hospitals as $k=> $value){
+                if($value['code'] === $request->code){
                     return response(['error' => 'Hospital is existed'], 401);
                 }
                 else{
@@ -73,21 +73,10 @@ class HospitalsController extends Controller
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
         }
-    //     if ($request->hasFile('file')) {
-    //         $filename = $request->file->getClientOriginalName();
-    //         $logo = $request->image->getClientOriginalName();
-    //         $path = $request->image->move("uploads",$logo);
-    //         $logoUrl = url('uploads'.'/'.$logo);
-    //         $request->merge(['logo' => $logo]);
-    //         $hospital = Hospital::create($request->all());
-    //         return response()->json(['success'=> "Created Successfull"], $this->successStatus);
-    //    }else{
-    //         return response()->json(['error'=>'Hospital is not created.'],401);
-    //    }
     }
     public function edit($id){
         $hospital = Hospital::find($id);
-        if($hospital){
+        if(!$hospital){
             return response()->json(['data'=> 'Data null'], 401);
         }else{
             return response()->json(['data'=> $hospital], $this->successStatus);
