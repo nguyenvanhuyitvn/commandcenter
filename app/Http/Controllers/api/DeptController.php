@@ -44,13 +44,13 @@ class DeptController extends Controller
                         $filename = $request->file->getClientOriginalName();
                         $path = $request->file->move("public/uploads",$filename);
                         $logoUrl = url('public/uploads'.'/'.$filename);
-                        $request->merge(['image' => $filename]);
+                        $request->merge(['logo' => $filename]);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
                     }else{
                         $filename = 'no-image.png';
                         $logoUrl = url('public/uploads'.'/'.$filename);
-                        $request->merge(['image' =>  $filename]);
+                        $request->merge(['logo' =>  $filename]);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
@@ -63,11 +63,11 @@ class DeptController extends Controller
                         $filename = $request->file->getClientOriginalName();
                         $path = $request->file->move("public/uploads",$filename);
                         $logUrl = url('public/uploads'.'/'.$filename);
-                        $request->merge(['image' => $filename]);
+                        $request->merge(['logo' => $filename]);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }else{
-                        $request->merge(['image' => 'public/uploads/no-image.png']);
+                        $request->merge(['logo' => 'public/uploads/no-image.png']);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
@@ -85,15 +85,46 @@ class DeptController extends Controller
         $depts = Dept::find($id);
         if ($request->hasFile('file')) {
             $filename = $request->file->getClientOriginalName();
-            $logo = $request->image->getClientOriginalName();
-            $path = $request->image->move("public/uploads",$logo);
+            $logo = $request->file->getClientOriginalName();
+            $path = $request->file->move("public/uploads",$logo);
             $logoUrl = url('public/uploads'.'/'.$logo);
-            $request->merge(['logo' => $logo]);
-            $depts->update($request->all());
+            $request->merge(['logo' => $logoUrl]);
+            if($request->code == $depts['code']){
+                $depts->name = $request->name;
+                $depts->address = $request->address;
+                $depts->logo = $request->logo;
+                $depts->provinces_id = $request->provinces_id;
+                $depts->districts_id = $request->districts_id;
+                $depts->wards_id = $request->wards_id;
+                $depts->save();
+            } else{
+                $depts->name = $request->name;
+                $depts->code = $request->code;
+                $depts->address = $request->address;
+                $depts->logo = $request->logo;
+                $depts->provinces_id = $request->provinces_id;
+                $depts->districts_id = $request->districts_id;
+                $depts->wards_id = $request->wards_id;
+                $depts->save();
+            } 
             return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }else{
-            $input= $request->only(['code','name', 'districts_id', 'provinces_id','wards_id','address']);
-            $depts->update($input);
+            if($request->code == $depts['code']){
+                $depts->name = $request->name;
+                $depts->address = $request->address;
+                $depts->provinces_id = $request->provinces_id;
+                $depts->districts_id = $request->districts_id;
+                $depts->wards_id = $request->wards_id;
+                $depts->save();
+            } else{
+                $depts->name = $request->name;
+                $depts->code = $request->code;
+                $depts->address = $request->address;
+                $depts->provinces_id = $request->provinces_id;
+                $depts->districts_id = $request->districts_id;
+                $depts->wards_id = $request->wards_id;
+                $depts->save();
+            } 
             return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }
     }
@@ -107,3 +138,4 @@ class DeptController extends Controller
 
     }
 }
+

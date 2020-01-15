@@ -65,16 +65,16 @@ class UserController extends Controller
                     return response(['error' => 'User is existed'], 401);
                 }
                 else{
-                   if ($request->hasFile('file')) {
-                        $filename = $request->file->getClientOriginalName();
-                        $path = $request->file->move("uploads",$filename);
-                        $logoUrl = url('uploads'.'/'.$filename);
-                        $request->merge(['image' => $filename]);
+                   if ($request->hasFile('image')) {
+                        $filename = $request->image->getClientOriginalName();
+                        $path = $request->image->move("public/uploads",$filename);
+                        $logoUrl = url('public/uploads'.'/'.$filename);
+                        $request->merge(['image' => $logoUrl]);
                         $users= User::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
                     }else{
                         $filename = 'no-image.png';
-                        $logoUrl = url('uploads'.'/'.$filename);
+                        $logoUrl = url('public/uploads'.'/'.$filename);
                         $request->merge(['image' =>  $filename]);
                         $users= User::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
@@ -84,11 +84,11 @@ class UserController extends Controller
             }
         }else{
 
-            if ($request->hasFile('file')) {
-                        $filename = $request->file->getClientOriginalName();
-                        $path = $request->file->move("uploads",$filename);
-                        $logUrl = url('uploads'.'/'.$filename);
-                        $request->merge(['image' => $filename]);
+            if ($request->hasFile('image')) {
+                        $filename = $request->image->getClientOriginalName();
+                        $path = $request->image->move("public/uploads",$filename);
+                        $logUrl = url('public/uploads'.'/'.$filename);
+                        $request->merge(['image' => $logUrl]);
                         $hospital= User::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }else{
@@ -131,17 +131,42 @@ class UserController extends Controller
     }
     public function update(Request $request, $id){
         $user = User::find($id);
-        if ($request->hasFile('file')) {
-            $filename = $request->file->getClientOriginalName();
+        if($request->account_types == 2 || $request->account_types ==3){
+            $parent_id = 0;
+        }else{
+            $hospital = Hospital::where('hospital_id', $request->hospitals_id)->get();
+            $parent_id = $hospital['depts_id'];
+        }
+        if ($request->hasFile('image')) {
+            $filename = $request->image->getClientOriginalName();
             $logo = $request->image->getClientOriginalName();
             $path = $request->image->move("uploads",$logo);
             $logoUrl = url('uploads'.'/'.$logo);
-            $request->merge(['image' => $logo]);
-            $user = User::update($request->all());
+            $request->merge(['image' => $logoUrl]);
+            $user->name = $request->name;
+            $user->image = $request->image;
+            $user->parent_id = $parent_id;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->hospitals_id = $request->hospitals_id;
+            $user->positions_id = $request->positions_id;
+            $user->departments_id = $request->departments_id;
+            $user->account_types_id = $request->account_types_id;
+            $user->status = $request->status;
+            $user->save();
+            // $user = User::update($request->all());
             return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }else{
-            $input= $request->only(['name','email', 'hospitals_id','positions_id','account_types_id','departments_id','status','password']);
-            $user = User::update($input);
+            $user->name = $request->name;
+            $user->parent_id = $parent_id;
+            $user->email = $request->email;
+            $user->password = $request->password;
+            $user->hospitals_id = $request->hospitals_id;
+            $user->positions_id = $request->positions_id;
+            $user->departments_id = $request->departments_id;
+            $user->account_types_id = $request->account_types_id;
+            $user->status = $request->status;
+            $user->save();
             return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }
     }

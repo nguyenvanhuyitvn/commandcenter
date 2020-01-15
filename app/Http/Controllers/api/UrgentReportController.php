@@ -133,8 +133,8 @@ class UrgentReportController extends Controller
         $request->merge(['patients_id' =>  $patients_id]);
         if ($request->hasFile('attachments')) {
             $filename = $request->file('attachments')->getClientOriginalName();
-            $path = $request->file('attachments')->move("public\uploads",$filename);
-            $file = url('public\uploads'.'/'.$filename);
+            $path = $request->file('attachments')->move("public/uploads",$filename);
+            $file = url('public/uploads'.'/'.$filename);
             $request->merge(['file' => $file]);
             $urgent_reports= UrgentReport::create($request->except('name', 'case_number','birthday','gender','patient_department_id'));
             if($urgent_reports){

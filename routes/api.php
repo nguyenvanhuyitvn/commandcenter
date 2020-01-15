@@ -32,5 +32,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     // Hospital
     Route::resource('Hospitals', 'api\HospitalsController');
     Route::resource('Depts', 'api\DeptController');
+    Route::resource('Departments', 'api\DepartmentsController');
+    Route::resource('Complains', 'api\ComplainController');
 });
 

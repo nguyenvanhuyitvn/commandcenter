@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
         $depts_director = Role::where('slug', 'depts')->first();
         $minister = Role::where('slug', 'minister')->first();
 
-        $user1 = User::create( ['id'=>3, "name"=>"Nguyễn Khắc Hiền",'image'=>'public\uploads\avatar.jpg','parent_id'=>0, "email"=>"nguyenkhachien@gmail.com", "password"=>bcrypt('123456'), 'hospitals_id'=>0, 'positions_id'=>7, 'departments_id'=>1,'account_types_id'=>2, 'status'=>1]);
+        $user1 = User::create( ['id'=>3, "name"=>"Nguyễn Khắc Hiền",'image'=>'public\uploads\avatar.jpg','parent_id'=>0, "email"=>"nguyenkhachien@gmail.com", "password"=>bcrypt('123456'), 'hospitals_id'=>0, 'positions_id'=>7, 'departments_id'=>1,''=>2, 'status'=>1]);
         $user1->roles()->attach($depts_director);
         $user2 = User::create(['id'=>4, "name"=>"Tạ Thị Vân Anh",'image'=>'public\uploads\avatar.jpg','parent_id'=>2, "email"=>"tavananh@gmail.com", "password"=>bcrypt('123456'), 'hospitals_id'=>2, 'positions_id'=>3, 'departments_id'=>1,'account_types_id'=>1, 'status'=>1]);
         $user2->roles()->attach($hospital_director);

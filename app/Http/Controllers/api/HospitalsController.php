@@ -43,14 +43,14 @@ class HospitalsController extends Controller
                 else{
                    if ($request->hasFile('file')) {
                         $filename = $request->file->getClientOriginalName();
-                        $path = $request->file->move("uploads",$filename);
-                        $logoUrl = url('uploads'.'/'.$filename);
+                        $path = $request->file->move("public/uploads",$filename);
+                        $logoUrl = url('public/uploads'.'/'.$filename);
                         $request->merge(['image' => $filename]);
                         $hospital= Hospital::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
                     }else{
                         $filename = 'no-image.png';
-                        $logoUrl = url('uploads'.'/'.$filename);
+                        $logoUrl = url('public/uploads'.'/'.$filename);
                         $request->merge(['image' =>  $filename]);
                         $hospital= Hospital::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
@@ -62,8 +62,8 @@ class HospitalsController extends Controller
 
             if ($request->hasFile('file')) {
                         $filename = $request->file->getClientOriginalName();
-                        $path = $request->file->move("uploads",$filename);
-                        $logUrl = url('uploads'.'/'.$filename);
+                        $path = $request->file->move("public/uploads",$filename);
+                        $logUrl = url('public/uploads'.'/'.$filename);
                         $request->merge(['image' => $filename]);
                         $hospital= Hospital::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
@@ -83,18 +83,55 @@ class HospitalsController extends Controller
         }
     }
     public function update(Request $request, $id){
+        // dd($request->all()); exit();
         $hospital = Hospital::find($id);
+        // dd($hospital['code']); exit();
         if ($request->hasFile('file')) {
             $filename = $request->file->getClientOriginalName();
-            $logo = $request->image->getClientOriginalName();
-            $path = $request->image->move("uploads",$logo);
-            $logoUrl = url('uploads'.'/'.$logo);
-            $request->merge(['logo' => $logo]);
-            $hospital = Hospital::update($request->all());
+            $logo = $request->file->getClientOriginalName();
+            $path = $request->file->move("public/uploads",$logo);
+            $logoUrl = url('public/uploads'.'/'.$logo);
+            $request->merge(['logo' => $logoUrl]);
+            if($request->code == $hospital['code']){
+                $hospital->name = $request->name;
+                $hospital->address = $request->address;
+                $hospital->logo = $request->logo;
+                $hospital->provinces_id = $request->provinces_id;
+                $hospital->districts_id = $request->districts_id;
+                $hospital->wards_id = $request->wards_id;
+                $hospital->depts_id = $request->depts_id;
+                $hospital->save();
+            } else{
+                $hospital->name = $request->name;
+                $hospital->code = $request->code;
+                $hospital->address = $request->address;
+                $hospital->logo = $request->logo;
+                $hospital->provinces_id = $request->provinces_id;
+                $hospital->districts_id = $request->districts_id;
+                $hospital->wards_id = $request->wards_id;
+                $hospital->depts_id = $request->depts_id;
+                $hospital->save();
+            } 
             return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }else{
-            $input= $request->only(['code','name', 'districts_id', 'provinces_id','wards_id','depts_id','address']);
-            $hospital = Hospital::update($input);
+            if($request->code == $hospital['code']){
+                $hospital->name = $request->name;
+                $hospital->address = $request->address;
+                $hospital->provinces_id = $request->provinces_id;
+                $hospital->districts_id = $request->districts_id;
+                $hospital->wards_id = $request->wards_id;
+                $hospital->depts_id = $request->depts_id;
+                $hospital->save();
+            } else{
+                $hospital->name = $request->name;
+                $hospital->code = $request->code;
+                $hospital->address = $request->address;
+                $hospital->provinces_id = $request->provinces_id;
+                $hospital->districts_id = $request->districts_id;
+                $hospital->wards_id = $request->wards_id;
+                $hospital->depts_id = $request->depts_id;
+                $hospital->save();
+            } 
             return response()->json(['success'=> "Updated Successfull"], $this->successStatus);
        }
     }
