@@ -31,5 +31,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::resource('SeriousProblemTypes', 'api\SeriousProblemTypes');
     // Hospital
     Route::resource('Hospitals', 'api\HospitalsController');
+    Route::resource('Depts', 'api\DeptController');
 });
 

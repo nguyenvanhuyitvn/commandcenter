@@ -28,7 +28,7 @@ class UrgentReportController extends Controller
                 $data[] = SeriousProblemType::where('id', $value1)->first()->toArray();
             }
             $urgent_reports['serious_problem_types'] = buildTree($data, 0);
-            
+
             // Tần suất báo cáo
             if($urgent_reports['frequence'] == 1){
                 $urgent_reports['frequence'] = "Hàng ngày";
@@ -118,7 +118,7 @@ class UrgentReportController extends Controller
             $user_dept = User::where('account_types_id', $user['parent_id'])->first();
             $mailTo = $user_dept['email'].','.$email_BTY['email'];
         }
-        
+
         $mailToArray = explode(',', $mailTo);
         $mailFrom = $user['email'];
         // Patient Table
@@ -133,8 +133,8 @@ class UrgentReportController extends Controller
         $request->merge(['patients_id' =>  $patients_id]);
         if ($request->hasFile('attachments')) {
             $filename = $request->file('attachments')->getClientOriginalName();
-            $path = $request->file('attachments')->move("uploads",$filename);
-            $file = url('uploads'.'/'.$filename);
+            $path = $request->file('attachments')->move("public\uploads",$filename);
+            $file = url('public\uploads'.'/'.$filename);
             $request->merge(['file' => $file]);
             $urgent_reports= UrgentReport::create($request->except('name', 'case_number','birthday','gender','patient_department_id'));
             if($urgent_reports){
@@ -147,7 +147,6 @@ class UrgentReportController extends Controller
                 });
                 return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
             }
-
         }else{
             $urgent_reports= UrgentReport::create($request->except('file','name', 'case_number','birthday','gender','patient_department_id','patient_hospital_id'));
             if($urgent_reports){
