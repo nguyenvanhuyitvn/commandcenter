@@ -20,7 +20,7 @@ class ComplainController extends Controller
         return response()->json(['data'=> $complains], $this->successStatus);
     }
 
-    public function show(){
+    public function show($id){
         $complains = Complain::find($id);
         if($complains['frequence'] == 1){
             $complains['frequence'] = "Hàng ngày";
