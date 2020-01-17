@@ -4,8 +4,9 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SeriousProblemType extends Model
+class Complainant extends Model
 {
-    protected $table = "serious_problem_types";
+    protected $table = "complainants";
     public $timestamps = false;
+   
 }

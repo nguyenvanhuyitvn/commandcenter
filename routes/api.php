@@ -30,8 +30,15 @@ Route::group(['middleware' => 'auth:api'], function() {
     // serious problem types
     Route::resource('SeriousProblemTypes', 'api\SeriousProblemTypes')->middleware('cors');
     // Hospital
+<<<<<<< HEAD
     Route::resource('Hospitals', 'api\HospitalsController')->middleware('cors');
     Route::resource('Depts', 'api\DeptController')->middleware('cors');
     Route::resource('Positions', 'api\PositionController')->middleware('cors');
+=======
+    Route::resource('Hospitals', 'api\HospitalsController');
+    Route::resource('Depts', 'api\DeptController');
+    Route::resource('Departments', 'api\DepartmentsController');
+    Route::resource('Complains', 'api\ComplainController');
+>>>>>>> 8e54853b6a0bd67536d86de9740bdc8767d17610
 });
 

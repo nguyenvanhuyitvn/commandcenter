@@ -12,5 +12,9 @@ class ReportType extends Model
     {
         return $this->hasMany('App\models\UrgentReport', 'report_types_id', 'id');
     }
+    public function complain()
+    {
+        return $this->hasMany('App\models\Complain', 'report_types_id', 'id');
+    }
     
 }
