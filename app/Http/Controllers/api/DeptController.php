@@ -40,17 +40,17 @@ class DeptController extends Controller
                     return response(['error' => 'Depts is existed'], 401);
                 }
                 else{
-                   if ($request->hasFile('file')) {
+                   if ($request->hasFile('logo')) {
                         $filename = $request->file->getClientOriginalName();
                         $path = $request->file->move("public/uploads",$filename);
                         $logoUrl = url('public/uploads'.'/'.$filename);
-                        $request->merge(['image' => $filename]);
+                        $request->merge(['logo' => $filename]);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()], $this->successStatus);
                     }else{
-                        $filename = 'no-image.png';
+                        $filename = 'public/uploads/no-image.png';
                         $logoUrl = url('public/uploads'.'/'.$filename);
-                        $request->merge(['image' =>  $filename]);
+                        $request->merge(['logo' =>  $filename]);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
@@ -59,15 +59,15 @@ class DeptController extends Controller
             }
         }else{
 
-            if ($request->hasFile('file')) {
+            if ($request->hasFile('logo')) {
                         $filename = $request->file->getClientOriginalName();
                         $path = $request->file->move("public/uploads",$filename);
                         $logUrl = url('public/uploads'.'/'.$filename);
-                        $request->merge(['image' => $filename]);
+                        $request->merge(['logo' => $filename]);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }else{
-                        $request->merge(['image' => 'public/uploads/no-image.png']);
+                        $request->merge(['logo' => 'public/uploads/no-image.png']);
                         $depts= Dept::create($request->all());
                         return response(['success'=>'Created successfull','request'=> $request->all()],$this->successStatus);
                     }
@@ -83,7 +83,7 @@ class DeptController extends Controller
     }
     public function update(Request $request, $id){
         $depts = Dept::find($id);
-        if ($request->hasFile('file')) {
+        if ($request->hasFile('logo')) {
             $filename = $request->file->getClientOriginalName();
             $logo = $request->image->getClientOriginalName();
             $path = $request->image->move("public/uploads",$logo);

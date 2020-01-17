@@ -12,10 +12,15 @@ class Hospital extends Model
     {
         return $this->hasMany('App\models\Department', 'hospitals_id', 'id');
     }
-    
+
     public function dept()
     {
         return $this->belongsTo('App\models\Dept', 'depts_id', 'id');
     }
-    
+
+    public function area()
+    {
+        return $this->hasMany('App\models\Area', 'hospitals_id', 'id');
+    }
+
 }

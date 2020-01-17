@@ -18,19 +18,20 @@ use Illuminate\Http\Request;
 // });
 
 
-Route::post('login', 'api\UserController@login')->name('login');
-Route::get('register', 'api\UserController@get_register')->name('register');
-Route::post('register', 'api\UserController@register')->name('register');
+Route::post('login', 'api\UserController@login')->name('login')->middleware('cors');
+Route::get('register', 'api\UserController@get_register')->name('register')->middleware('cors');
+Route::post('register', 'api\UserController@register')->name('register')->middleware('cors');
 Route::group(['middleware' => 'auth:api'], function() {
     // User
-    Route::resource('Users', 'api\UserController');
-    Route::post('details', 'api\UserController@details');
+    Route::resource('Users', 'api\UserController')->middleware('cors');
+    Route::post('details', 'api\UserController@details')->middleware('cors');
     // Urgent Reports
-    Route::resource('UrgentReports', 'api\UrgentReportController');
+    Route::resource('UrgentReports', 'api\UrgentReportController')->middleware('cors');
     // serious problem types
-    Route::resource('SeriousProblemTypes', 'api\SeriousProblemTypes');
+    Route::resource('SeriousProblemTypes', 'api\SeriousProblemTypes')->middleware('cors');
     // Hospital
-    Route::resource('Hospitals', 'api\HospitalsController');
-    Route::resource('Depts', 'api\DeptController');
+    Route::resource('Hospitals', 'api\HospitalsController')->middleware('cors');
+    Route::resource('Depts', 'api\DeptController')->middleware('cors');
+    Route::resource('Positions', 'api\PositionController')->middleware('cors');
 });
 

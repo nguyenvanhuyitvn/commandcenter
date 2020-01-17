@@ -15,12 +15,14 @@ class DatabaseSeeder extends Seeder
             AccountTypesTableSeeder::class,
             DeptsTableSeeder::class,
             HospitalsTableSeeder::class,
+            AreasTableSeeder::class,
             PositionsTableSeeder::class,
             DepartmentsTableSeeder::class,
             ReportTypesTableSeeder::class,
             RolesTableSeeder::class,
             SeriousProblemTypesTableSeeder::class,
             UsersTableSeeder::class,
+
         ]);
     }
 }

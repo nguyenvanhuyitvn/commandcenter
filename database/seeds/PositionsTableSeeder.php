@@ -14,13 +14,14 @@ class PositionsTableSeeder extends Seeder
         DB::table('positions')->delete();
         DB::table('positions')->insert(
             [
-                ['id'=>1, "name"=>"Bác sĩ"],
-                ['id'=>2, "name"=>"Điều dưỡng"],
-                ['id'=>3, "name"=>"Giám đốc viện"],
-                ['id'=>4, "name"=>"Trưởng khoa"],
-                ['id'=>5, "name"=>"Bộ trưởng"],
-                ['id'=>6, "name"=>"Thứ trưởng"],
-                ['id'=>7, "name"=>"Giám đốc sở"],
+                ['id'=>1, "name"=>"Bác sĩ", "code"=>"BACSI"],
+                ['id'=>2, "name"=>"Điều dưỡng", "code"=>"DIEUDUONG"],
+                ['id'=>3, "name"=>"Giám đốc viện", "code"=>"GIAMDOCVIEN"],
+                ['id'=>4, "name"=>"Trưởng khoa", "code"=>"TRUONGKHOA"],
+                ['id'=>5, "name"=>"Bộ trưởng", "code"=>"BOTRUONG"],
+                ['id'=>6, "name"=>"Thứ trưởng", "code"=>"THUTRUONG"],
+                ['id'=>7, "name"=>"Giám đốc sở", "code"=>"GIAMDOCSO"],
+                ['id'=>8, "name"=>"Nhân viên", "code"=>"NHANVIEN"],
             ]
         );
     }
